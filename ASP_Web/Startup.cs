@@ -1,5 +1,6 @@
 using asp_web.service;
 using ASP_Web.Model;
+using ASP_Web.Service;
 using MailKit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IMailService = ASP_Web.Service.IMailService;
 
 namespace ASP_Web
 {
@@ -62,14 +64,16 @@ namespace ASP_Web
             });
 
             services.AddScoped<IUserService, UserService>();
-            //services.AddTransient<IMailService, SendGridMailService>();
+            services.AddTransient<IMailService, SendGridMailService>();
             services.AddControllers();
+            services.AddRazorPages();
+
         }
 
 
-       
 
-        
+
+
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +85,8 @@ namespace ASP_Web
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
 
             app.UseRouting();
 
@@ -89,6 +95,7 @@ namespace ASP_Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
         }
