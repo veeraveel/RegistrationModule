@@ -65,8 +65,9 @@ namespace ASP_Web
 
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IMailService, SendGridMailService>();
-            services.AddControllers();
+            services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddControllers();
 
         }
 
